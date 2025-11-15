@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Heart Disease Prediction"
+        android:textStyle="bold"
+        android:textSize="25sp"
+        android:id="@+id/header_predictor_heart"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:textColor="#3D9AB1" />
+    <TextView
+        android:id="@+id/header_predictor_heart_question"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/header_predictor_heart"
+        android:layout_marginBottom="40dp"
+        android:layout_width="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_height="wrap_content"
+        android:text="Question will be here"
+        android:textColor="#535353"
+        android:textSize="19sp"
+        />
+
+    <EditText
+        android:id="@+id/predictor_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/header_predictor_heart_question"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:maxLength="3"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:hint="Enter here"
+        android:inputType="numberDecimal"
+        android:minWidth="200dp"
+        android:textColorHint="#7C7B7B"
+        android:padding="10dp"
+        android:background="@drawable/transparentbutton"
+        android:textColor="#206AA5"
+        android:visibility="gone"
+        android:textSize="17sp"
+        />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="2dp"
+        android:layout_marginEnd="2dp"
+        android:layout_margin="10dp"
+        android:layout_below="@id/header_predictor_heart_question"
+        android:layout_marginTop="45dp">
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:id="@+id/radiogroup1"
+            android:layout_height="wrap_content"
+            >
+            <RadioButton
+                android:id="@+id/optbtn1"
+                android:padding="15dp"
+                android:layout_width="match_parent"
+                android:button="@drawable/round_button_quiz"
+                android:background="@drawable/register_selector_radiobutton"
+                android:textColor="@drawable/register_text_color"
+                android:layout_height="wrap_content"
+                android:text="Answer 2"
+                android:layout_marginTop="8dp"/>
+
+            <RadioButton
+                android:id="@+id/optbtn2"
+                android:layout_width="match_parent"
+                android:padding="15dp"
+                android:button="@drawable/round_button_quiz"
+                android:background="@drawable/register_selector_radiobutton"
+                android:textColor="@drawable/register_text_color"
+                android:layout_height="wrap_content"
+                android:text="Answer 2"
+                android:layout_marginTop="8dp"/>
+
+            <RadioButton
+                android:id="@+id/optbtn3"
+                android:layout_width="match_parent"
+                android:padding="15dp"
+                android:visibility="gone"
+                android:button="@drawable/round_button_quiz"
+                android:background="@drawable/register_selector_radiobutton"
+                android:textColor="@drawable/register_text_color"
+                android:layout_height="wrap_content"
+                android:text="Answer 2"
+                android:layout_marginTop="8dp"/>
+
+            <RadioButton
+                android:id="@+id/optbtn4"
+                android:padding="15dp"
+                android:layout_width="match_parent"
+                android:button="@drawable/round_button_quiz"
+                android:visibility="gone"
+                android:background="@drawable/register_selector_radiobutton"
+                android:textColor="@drawable/register_text_color"
+                android:layout_height="wrap_content"
+                android:text="Answer 2"
+                android:layout_marginTop="8dp"/>
+        </RadioGroup>
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Next"
+        android:id="@+id/nextbtn_predictor"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:minWidth="120dp"
+        android:padding="10dp"
+        android:background="@drawable/round_button"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/primary"
+        android:layout_margin="10dp"
+        android:layout_gravity="end|bottom"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:id="@+id/predictor_result_layout"
+        android:visibility="gone"
+        android:layout_below="@id/header_predictor_heart"
+        >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Result"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/predictor_result_header"
+        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your result is ....."
+            android:textSize="18sp"
+            android:id="@+id/predictor_result"
+            android:textColor="@color/black"
+            android:layout_below="@id/predictor_result_header"
+            android:layout_marginTop="20dp"
+            />
+
+    </RelativeLayout>
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="280dp"
+        android:layout_height="280dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        app:lottie_rawRes="@raw/heartlogo"
+        android:id="@+id/searchlottie"
+        app:lottie_autoPlay="true"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        app:lottie_loop="true"/>
+</RelativeLayout>
