@@ -39,7 +39,7 @@ public class Dashboard extends AppCompatActivity {
     RadioButton option1,option2,option3,option4;
 
     String[][] arrquestion;
-    Float[] arranswer=new Float[7];
+    Float[] arranswer=new Float[11];
     String flag="opt";
     int counter=0;
     EditText value;
@@ -74,27 +74,19 @@ public class Dashboard extends AppCompatActivity {
         next=findViewById(R.id.nextbtn_predictor);
 
         arrquestion = new String[][]{
-                {"How old are you?", "val","In years"},
-
                 {"What is your gender?", "opt", "2", "Male", "Female"},
+                {"How tall are you? (cm)", "val", "In cm"},
+                {"What is your weight? (kg)", "val", "In kg"},
+                {"Resting BP high (systolic)?", "val", "mm Hg"},
+                {"Resting BP low (diastolic)?", "val", "mm Hg"},
+                {"Cholesterol level (mg/dL)?", "opt", "3","Less than 200 mg/dL","201 - 239 mg/dL","240 mg/dL or Higher"},
+                {"What is your Blood sugar level?", "opt", "3", "Less than 100 mg/dL", "100 - 125 mg/dL","126 mg/dL or Higher"},
+                {"Do you smoke?","opt","2","No","Yes"},
+                {"Do you consume alcohol?","opt","2","No","Yes"},
+                {"Do you exercise regularly?","opt","2","No","Yes"},
+                {"Your age?","val","In years"},
 
-                {"What kind of chest pain do you feel?", "opt", "4",
-                        "Pain during walking/exercise (Typical)",
-                        "Uncertain or mixed pain (Atypical)",
-                        "Not heart-related pain (Non-anginal)",
-                        "No chest pain"},
-
-                {"What is your resting blood pressure? (upper number)", "val","Systolic mm Hg"},
-
-                {"What is your cholesterol level? (mg/dL)", "val","In mg/dL"},
-
-                {"What is the highest heart rate you achieved? (or estimate)", "val","In BPM"},
-
-                {"Do you get chest pain during exercise?", "opt", "2",
-                        "No, I don’t get pain",
-                        "Yes, I get pain while exercising"}
         };
-
         loadquestion();
 
         next.setOnClickListener(new View.OnClickListener() {
@@ -164,33 +156,75 @@ public class Dashboard extends AppCompatActivity {
 
 
                 try {
+                    float bmi=calBMI(arranswer[2],arranswer[1]);
                     float perform = predict(
-                            arranswer[0],   // age
-                            arranswer[1],   // gender
-                            arranswer[2],   // chest pain type
-                            arranswer[3],   // resting bp
-                            arranswer[4],   // cholesterol
-                            arranswer[5],   // max heart rate
-                            arranswer[6]
+                            arranswer[0],  // gender
+                            arranswer[1],  // height
+                            arranswer[2],  // weight
+                            arranswer[3],  // ap_hi (resting BP high)
+                            arranswer[4],  // ap_lo (resting BP low)
+                            arranswer[5],  // cholesterol
+                            arranswer[6],  // gluc
+                            arranswer[7],  // smoke
+                            arranswer[8],  // alco
+                            arranswer[9],  // active
+                            bmi, // BMI
+                            arranswer[10]  // age_years
                     );
+
                     //result.setText(String.valueOf(perform));
+                    String resulttxt="";
                     if (perform>=0.8) {
-                        result.setText("Your healthy score is "+String.valueOf((1-perform)*100)+"%"+"\n"+
+                        resulttxt="Your healthy score is "+String.valueOf((1-perform)*100)+"%"+"\n"+
                                 "Disease Risk is "+String.valueOf((perform)*100)+"%"+
-                                "\n\nResult is not good, you may have heart related issues in future, be careful!");
+                                "\n\nResult is not good, you may have heart related issues in future, be careful!";
+                        resulttxt+="\n\nYour BMI is "+calBMI(arranswer[2],arranswer[1])+" kg/m^2 , ";
+                        if(bmi<18.5){
+                            resulttxt+="you are also an underweight person, focus on your diet as it can be dangerous if you continue this lifestyle.";
+                        }
+                        else if(bmi>18.5 && bmi<24.9){
+                            resulttxt+="you are a healthy person according to your BMI. To remain healthy, you should do regular cardio exercises and intake healthy your diet with less fast foods intake especially the food with high cholesterol and high saturated fats.";
+                        }
+                        else{
+                            resulttxt += "you are overweight according to your BMI, which may increase your risk of heart disease. Consider improving your overall diet i.e reduce regular intake of fast foods and start doing physical activities daily.";
+                        }
 
                     } else {
                         if(perform>0.5 && perform<0.8){
-                            result.setText("Your healthy score is "+String.valueOf((1-perform)*100)+"%"+"\n"+
+                            resulttxt="Your healthy score is "+String.valueOf((1-perform)*100)+"%"+"\n"+
                                     "Disease Risk is "+String.valueOf((perform)*100)+"%"+
-                                    "\n\nYour heart is moderately healthy, need to be careful!");
+                                    "\n\nYour heart is moderately healthy, need to be careful!\n\n";
+                            resulttxt+="\n\nYour BMI is "+calBMI(arranswer[2],arranswer[1])+" kg/m^2 , ";
+                            if(bmi<18.5){
+                                resulttxt+="you are also an underweight person, focus on your diet as it can be dangerous if you continue this lifestyle.";
+                            }
+                            else if(bmi>18.5 && bmi<24.9){
+                                resulttxt+="you are a healthy person according to your BMI. To remain healthy, you should focus on regular cardio exercises and healthy diet intake. Most importantly reduce fast foods.";
+                            }
+                            else{
+                                resulttxt += "you are overweight according to your BMI, which may increase your risk of heart disease. Consider improving your diet i.e reduce regular intake of fast foods and start doing physical activities daily.";
+                            }
                         }
                         else{
-                            result.setText("Your healthy score is "+String.valueOf((1-perform)*100)+"%"+"\n"+
+                            resulttxt="Your healthy score is "+String.valueOf((1-perform)*100)+"%"+"\n"+
                                     "Disease Risk is "+String.valueOf((perform)*100)+"%"+
-                                    "\n\nYour heart is very healthy!");
-                        }
+                                    "\n\nYour heart is very healthy!";
+                            resulttxt+="\n\nYour BMI is "+calBMI(arranswer[2],arranswer[1])+" kg/m^2 , ";
 
+                            if(bmi<18.5){
+                                resulttxt+="you are an underweight person, focus on your diet as it can be dangerous if you continue this lifestyle. As your heart health is normal, you can focus on moderate fats and more protien but be careful of cholesterol level, you can do one thing, try eat apple before any risky food like chicken or dairy food like paneer as apple contains pectin that can reduce overall absorption of cholesterol in your gut";
+                            }
+                            else if(bmi>18.5 && bmi<24.9){
+                                resulttxt+="you are a healthy person according to your BMI. You should focus on regular cardio exercises and healthy diet. Most importantly reduce your overall intake of fast foods especially which contains high saturated fats and high cholesterol";
+                            }
+                            else{
+                                resulttxt += "you are overweight according to your BMI, which may increase your risk of heart disease. Consider improving your diet i.e reduce regular intake of fast foods especially which contains high saturated fats and high cholesterol, also start doing physical activities daily for overall health.";
+                            }
+                        }
+                        resulttxt+="\n\nYou should focus add more fruits in your diet like pomegranate,apple,orange,pineapple,grapes,amla,etc which are very rich in vitamins,fibre,antioxidant and has anti-inflammatory properties that can keep your blood vessels healthy and protect you from any cardiovascular diseases";
+
+
+                       result.setText(resulttxt);
                     }
                 } catch (Exception e) {
                     result.setText(e.toString());
@@ -198,23 +232,35 @@ public class Dashboard extends AppCompatActivity {
                 }
             }
 
+            private float calBMI(Float weight, Float height) {
+                return (weight/((height/100)*(height/100)));
+
+            }
+
         });
 
     }
-    private float predict(float age,
-                          float gender,
-                          float cp,
-                          float trestbps,
-                          float chol,
-                          float thalach,
-                          float exang) {
+    private float predict(float gender,
+                                float height,
+                                float weight,
+                                float ap_hi,
+                                float ap_lo,
+                                float cholesterol,
+                                float gluc,
+                                float smoke,
+                                float alco,
+                                float active,
+                                float BMI,
+                                float age_years) {
 
         float[][] input = {{
-                age, gender, cp, trestbps, chol, thalach, exang
+                gender, height, weight, ap_hi, ap_lo, cholesterol, gluc, smoke, alco, active, BMI, age_years
         }};
 
         float[][] output = new float[1][1];
+
         interpreter.run(input, output);
+
         return output[0][0];
     }
 
