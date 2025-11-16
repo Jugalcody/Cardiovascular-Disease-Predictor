@@ -1,0 +1,37 @@
+CardioAnalyser Privacy Policy
+
+Effective Date: November 16, 2025
+
+
+Introduction
+
+CardioAnalyser is an application designed to provide information about cardiovascular health. The app asks simple questions such as cholesterol level, blood pressure, age, and lifestyle habits to provide a cardiovascular risk assessment using a logistic regression model.
+
+
+Data Collection
+
+- CardioAnalyser does NOT collect, store, or share any personal information.
+- All answers entered by users remain on the device and are only used to generate results within the app.
+- No data is sent to servers or third-party services.
+
+
+3. Data Usage
+
+- The app only uses the input provided by the user to calculate a cardiovascular risk score.
+- Results are shown directly to the user and are not recorded anywhere.
+
+
+4. Contact Information
+
+For any questions regarding this Privacy Policy, you can contact us at:
+Email: techstack125@gmail.com
+
+
+5. User Responsibility
+
+- Users should provide accurate information to get meaningful results.
+- The app is for informational purposes only and does not replace professional medical advice.
+
+
+By using CardioAnalyser, you agree to this Privacy Policy.
+
